@@ -51,28 +51,16 @@
 
 
 
-<meta name="description" content="####【一】 关于记住密码状态
-
-记住密码采取的方法可以存储在本地的local storage中 或者在 cookie中，两者区别是local storage安全性相比cookie要差，而cookie的存储大小则比local storage要小。
-
-一般的处理方法是在打开登陆页面时候检查本地有无储存数据，将数据填充进去。但是这些都是在js中操作，而浏览器是可以记住你输入的表单密码数据的，它会弹出">
+<meta name="description" content="有关如何阻止浏览器记住你的密码，以及实现登陆超时自动注销功能。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="实现记住密码与登录超时功能">
 <meta property="og:url" content="http://yoursite.com/2016/03/25/实现记住密码与登录超时功能/index.html">
 <meta property="og:site_name" content="ccDeng">
-<meta property="og:description" content="####【一】 关于记住密码状态
-
-记住密码采取的方法可以存储在本地的local storage中 或者在 cookie中，两者区别是local storage安全性相比cookie要差，而cookie的存储大小则比local storage要小。
-
-一般的处理方法是在打开登陆页面时候检查本地有无储存数据，将数据填充进去。但是这些都是在js中操作，而浏览器是可以记住你输入的表单密码数据的，它会弹出">
-<meta property="og:updated_time" content="2016-03-25T14:13:07.638Z">
+<meta property="og:description" content="有关如何阻止浏览器记住你的密码，以及实现登陆超时自动注销功能。">
+<meta property="og:updated_time" content="2016-03-25T14:18:10.762Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="实现记住密码与登录超时功能">
-<meta name="twitter:description" content="####【一】 关于记住密码状态
-
-记住密码采取的方法可以存储在本地的local storage中 或者在 cookie中，两者区别是local storage安全性相比cookie要差，而cookie的存储大小则比local storage要小。
-
-一般的处理方法是在打开登陆页面时候检查本地有无储存数据，将数据填充进去。但是这些都是在js中操作，而浏览器是可以记住你输入的表单密码数据的，它会弹出">
+<meta name="twitter:description" content="有关如何阻止浏览器记住你的密码，以及实现登陆超时自动注销功能。">
 
 
 
@@ -262,7 +250,7 @@
       
 
       
-        <span itemprop="articleBody"><p>####【一】 关于记住密码状态</p>
+        <span itemprop="articleBody"><p>有关如何阻止浏览器记住你的密码，以及实现登陆超时自动注销功能。<br><a id="more"></a><br>【一】 关于记住密码状态</p>
 <ul>
 <li><p>记住密码采取的方法可以存储在本地的local storage中 或者在 cookie中，两者区别是local storage安全性相比cookie要差，而cookie的存储大小则比local storage要小。</p>
 </li>
@@ -307,7 +295,7 @@
 </li>
 </ol>
 <hr>
-<p>####【二】 关于登陆超时问题<br>我们现在可以来谈谈如何通过session 实现浏览器登陆时间过长，提示用户登陆失效的效果。（可通过ajax请求，然后后台过滤监听session，but，现在讨论的是网页端）</p>
+<p>【二】 关于登陆超时问题<br>我们现在可以来谈谈如何通过session 实现浏览器登陆时间过长，提示用户登陆失效的效果。（可通过ajax请求，然后后台过滤监听session，but，现在讨论的是网页端）</p>
 <p>那么，我们要实现这个功能（只通过前台的网页端），可以通过js的操控模拟，大致思路：设置一个时间，监听页面的鼠标以及键盘时间，如果长时间没有触发，计时已经到了设定的时间，则触发弹出提示窗口，登陆超时，部分代码如下：</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"> <span class="doctype">&lt;!doctype html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">html</span> <span class="attribute">lang</span>=<span class="value">"en"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">charset</span>=<span class="value">"UTF-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">title</span>&gt;</span>Document<span class="tag">&lt;/<span class="title">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">style</span> <span class="attribute">type</span>=<span class="value">"text/css"</span>&gt;</span><span class="css"></span><br><span class="line">        <span class="id">#test</span> <span class="rules">&#123;</span><br><span class="line">            <span class="rule"><span class="attribute">width</span>:<span class="value"> <span class="number">100%</span></span></span>;</span><br><span class="line">            <span class="rule"><span class="attribute">height</span>:<span class="value"> <span class="number">3000px</span></span></span>;</span><br><span class="line">            <span class="rule"><span class="attribute">background-color</span>:<span class="value"> <span class="function">rgb</span>(<span class="number">244</span>,<span class="number">244</span>,<span class="number">244</span>)</span></span>;</span><br><span class="line">        &#125;</span></span><br><span class="line">    </span><span class="tag">&lt;/<span class="title">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">div</span> <span class="attribute">onkeydown</span>=<span class="value">"start()"</span> <span class="attribute">onmousedown</span>=<span class="value">"start()"</span> <span class="attribute">onmousemove</span>=<span class="value">"start()"</span> <span class="attribute">id</span>=<span class="value">"test"</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">script</span> <span class="attribute">type</span>=<span class="value">"text/javascript"</span>&gt;</span><span class="javascript"></span><br><span class="line">        <span class="keyword">var</span> timetask = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">var</span> loginoutTime = <span class="number">30</span>;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">timecount</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">            timetask++;</span><br><span class="line">            <span class="built_in">console</span>.log(timetask);</span><br><span class="line">            <span class="keyword">if</span>(timetask &gt;= loginoutTime) &#123;</span><br><span class="line">                loginout();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">start</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">            timetask = <span class="number">0</span>;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">'start!'</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">loginout</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">            alert(<span class="string">'long time!'</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        setInterval(<span class="string">'timecount()'</span>,<span class="number">1000</span>);</span><br><span class="line">    </span><span class="tag">&lt;/<span class="title">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
 </span>
