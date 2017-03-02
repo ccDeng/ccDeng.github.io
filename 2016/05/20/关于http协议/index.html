@@ -35,7 +35,7 @@
 <link href="/css/main.css?v=0.4.5.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="js,web," />
+  <meta name="keywords" content="HTTP," />
 
 
 
@@ -51,16 +51,16 @@
 
 
 
-<meta name="description" content="有关如何阻止浏览器记住你的密码，以及实现登陆超时自动注销功能。">
+<meta name="description" content="与HTTP相关。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="实现记住密码与登录超时功能">
-<meta property="og:url" content="http://yoursite.com/2016/03/25/实现记住密码与登录超时功能/index.html">
+<meta property="og:title" content="关于HTTP">
+<meta property="og:url" content="http://yoursite.com/2016/05/20/关于http协议/index.html">
 <meta property="og:site_name" content="ccDeng">
-<meta property="og:description" content="有关如何阻止浏览器记住你的密码，以及实现登陆超时自动注销功能。">
-<meta property="og:updated_time" content="2016-03-25T14:18:10.762Z">
+<meta property="og:description" content="与HTTP相关。">
+<meta property="og:updated_time" content="2017-03-02T08:40:10.198Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="实现记住密码与登录超时功能">
-<meta name="twitter:description" content="有关如何阻止浏览器记住你的密码，以及实现登陆超时自动注销功能。">
+<meta name="twitter:title" content="关于HTTP">
+<meta name="twitter:description" content="与HTTP相关。">
 
 
 
@@ -72,7 +72,7 @@
   };
 </script>
 
-  <title> 实现记住密码与登录超时功能 | ccDeng </title>
+  <title> 关于HTTP | ccDeng </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -202,7 +202,7 @@
             
             
               
-                实现记住密码与登录超时功能
+                关于HTTP
               
             
           </h1>
@@ -211,8 +211,8 @@
         <div class="post-meta">
           <span class="post-time">
             发表于
-            <time itemprop="dateCreated" datetime="2016-03-25T22:06:42+08:00" content="2016-03-25">
-              2016-03-25
+            <time itemprop="dateCreated" datetime="2016-05-20T14:33:26+08:00" content="2016-05-20">
+              2016-05-20
             </time>
           </span>
 
@@ -221,8 +221,8 @@
               &nbsp; | &nbsp; 分类于
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/js/" itemprop="url" rel="index">
-                    <span itemprop="name">js</span>
+                  <a href="/categories/HTTP/" itemprop="url" rel="index">
+                    <span itemprop="name">HTTP</span>
                   </a>
                 </span>
 
@@ -237,8 +237,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/03/25/实现记住密码与登录超时功能/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/03/25/实现记住密码与登录超时功能/" itemprop="commentsCount"></span>
+                <a href="/2016/05/20/关于http协议/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/20/关于http协议/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -257,54 +257,27 @@
       
 
       
-        <span itemprop="articleBody"><p>有关如何阻止浏览器记住你的密码，以及实现登陆超时自动注销功能。<br><a id="more"></a><br>【一】 关于记住密码状态</p>
+        <span itemprop="articleBody"><p> 与HTTP相关。<br><a id="more"></a></p>
 <ul>
-<li><p>记住密码采取的方法可以存储在本地的local storage中 或者在 cookie中，两者区别是local storage安全性相比cookie要差，而cookie的存储大小则比local storage要小。</p>
-</li>
-<li><p>一般的处理方法是在打开登陆页面时候检查本地有无储存数据，将数据填充进去。但是这些都是在js中操作，而浏览器是可以记住你输入的表单密码数据的，它会弹出来提示小窗口问你是否记住密码，而这个密码我们是可以在浏览器设置中找到的，并且它会自动在你打开登陆页的时候填充进去。</p>
-</li>
-<li><p>那么我不想要记住密码时候应该怎么操作：</p>
-<ol>
-<li><p>autocomplete=”off”属性</p>
-</li>
-<li><p>页面采用https协议，因为https是不会对表单进行保存信息的</p>
-</li>
-<li><p>采用flash做登录表单，这种情况浏览器也不会记录表单信息</p>
-</li>
-<li><p>浏览器实际是根据type=”password”来获取记得表单密码信息的，动态设置密码域</p>
-</li>
-</ol>
-</li>
-<li><p>那然后我们接下来谈一下，这几个方法的具体实现，以及利弊问题</p>
-<ol>
-<li><p>autocomplete属性是不要自动填充，但是这个方法再chrome中是没有用的，所以可以在写代码时候以防万一写上去，对于firefox等浏览器还是有用的。</p>
-</li>
-<li><p>至于页面采用https协议，这是项目开始之前就定好的，所以这个方法不能在项目进行时采用</p>
-</li>
-<li><p>采用flash做表单，但是因为涉及网站优化问题所以并不推荐</p>
-</li>
-<li><p>给出代码实现</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//在获取焦点时候将type设置为password，IE8以下不可，ie8以下可考虑隐藏域做法</span></span><br><span class="line">$(<span class="string">"#password"</span>).focus(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">     <span class="keyword">this</span>.type = <span class="string">'password'</span>;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
+<li><p>首先，要知道HTTP是什么。<br>  HTTP是Hyper Text Transfer Protocol的缩写，也称超文本传输协议，是用于从万维网服务器传输超文本到本地浏览器的传送协议。其主要特点是：支持C/S模式，无连接，无状态，快速灵活。</p>
+<p>  HTTP的工作原理为：<br>  1.客户端TCP链接到服务器<br>  2.客户端发送请求<br>  3.服务器响应<br>  4.释放TCP<br>  5.客户端解析</p>
 </li>
 </ul>
 <hr>
-<p>【题外话】关于session的了解</p>
-<ol>
-<li><p>session代表服务器与浏览器的一次会话过程，这个过程是连续的，也可以时断时续的，但是它的具体含义有很多的扩展</p>
+<p>接下来，了解一些更具体的东西</p>
+<ul>
+<li><p>HTTP的URL<br>  首先说明URI跟URL。<br>  HTTP采用统一资源标识符（即URI）来传输数据和建立连接，而（统一资源定位符）URL包含在URI中，两者最明显的区别URL指明了如何locate到这个资源，在IETF中将URL定义为URI的子集，举例来说，人的身份证号就是一个URI，但是这个号码是locate不到这个人的。<br>  HTTP中URL的格式为 http: //host[:port][abs_path]<br>  其中http是协议，host为主机地址，port为端口号，abs_path为请求资源的URI</p>
 </li>
-<li><p>session机制采用的是在服务器端保持状态的方案，举例来说，就是每个人都有学号，但是我们的学号并没有信息，你要查询学生的信息时候，提供学生学号，学校可以从档案中查询你的信息，这就是在服务器端保存。</p>
+<li><p>HTTP的请求（request）与响应（response）<br>  HTTP的request报文由三部分组成，包括请求行、首部行、实体主体。其中请求行包括方法、URL、HTTP版本。<br>  response报文由三部分组成，包括状态行、首部行、实体主体。其中状态行包括HTTP版本、状态码、简单短语。</p>
 </li>
-<li><p>cookie的对比，cookie机制采用的是在客户端保持状态的方案，举例来说，也就是每个学生有一张学生卡，这张卡里面就已经记录了他的信息。</p>
+<li><p>HTTP请求方法<br>  OPTION： 请求一些选项的信息<br>  GET：请求读取URL标志的信息<br>  HEAD： 请求读取URL标志的信息首部<br>  POST： 给服务器添加信息（GET跟POST请求的区别在于GET传参数附在URL后，POST传Params）<br>  PUT： 在URL下存储文档<br>  DELETE： 删除URL下资源<br>  TRACE：进行环回测试<br>  CONNECT： 代理服务器<br>  另，POST请求要发送两次，先发送头再发送数据，如只需要获取尽量使用GET</p>
 </li>
-<li><p>由于采用服务器端保持状态的方案在客户端也需要保存一个标识，所以session机制可能需要借助于cookie机制来达到保存标识的目的，但是并不止这一种方法。（如JSESSIONID）</p>
+<li><p>HTTP状态码<br>  1xx： 表示通知信息，如请求收到了或正在处理<br>  2xx： 表示成功，如接受或者知道<br>  3xx： 表示重定向，如完成请求还需进一步<br>  4xx： 表示客户端的错误，不能完成<br>  5xx： 服务器错误，不能完成<br>  举例较为常见的状态码：</p>
+  <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">200</span> OK <span class="comment">//客户端请求成功</span></span><br><span class="line"><span class="number">304</span> Not Modified <span class="comment">//未修改</span></span><br><span class="line"><span class="number">400</span> Bad Request <span class="comment">//客户端请求有语法错误</span></span><br><span class="line"><span class="number">401</span> Unauthorized <span class="comment">//未经授权 </span></span><br><span class="line"><span class="number">403</span> Forbidden <span class="comment">//服务器拒绝服务</span></span><br><span class="line"><span class="number">404</span> Not Found <span class="comment">//请求资源不存在</span></span><br><span class="line"><span class="number">500</span> Internal Server Error <span class="comment">//服务器发生不可预期的错误</span></span><br><span class="line"><span class="number">503</span> Server Unavailable <span class="comment">//服务器当前不能处理请求</span></span><br></pre></td></tr></table></figure>
 </li>
-</ol>
-<hr>
-<p>【二】 关于登陆超时问题<br>我们现在可以来谈谈如何通过session 实现浏览器登陆时间过长，提示用户登陆失效的效果。（可通过ajax请求，然后后台过滤监听session，but，现在讨论的是网页端）</p>
-<p>那么，我们要实现这个功能（只通过前台的网页端），可以通过js的操控模拟，大致思路：设置一个时间，监听页面的鼠标以及键盘时间，如果长时间没有触发，计时已经到了设定的时间，则触发弹出提示窗口，登陆超时，部分代码如下：</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"> <span class="doctype">&lt;!doctype html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">html</span> <span class="attribute">lang</span>=<span class="value">"en"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">charset</span>=<span class="value">"UTF-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">title</span>&gt;</span>Document<span class="tag">&lt;/<span class="title">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">style</span> <span class="attribute">type</span>=<span class="value">"text/css"</span>&gt;</span><span class="css"></span><br><span class="line">        <span class="id">#test</span> <span class="rules">&#123;</span><br><span class="line">            <span class="rule"><span class="attribute">width</span>:<span class="value"> <span class="number">100%</span></span></span>;</span><br><span class="line">            <span class="rule"><span class="attribute">height</span>:<span class="value"> <span class="number">3000px</span></span></span>;</span><br><span class="line">            <span class="rule"><span class="attribute">background-color</span>:<span class="value"> <span class="function">rgb</span>(<span class="number">244</span>,<span class="number">244</span>,<span class="number">244</span>)</span></span>;</span><br><span class="line">        &#125;</span></span><br><span class="line">    </span><span class="tag">&lt;/<span class="title">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">div</span> <span class="attribute">onkeydown</span>=<span class="value">"start()"</span> <span class="attribute">onmousedown</span>=<span class="value">"start()"</span> <span class="attribute">onmousemove</span>=<span class="value">"start()"</span> <span class="attribute">id</span>=<span class="value">"test"</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">script</span> <span class="attribute">type</span>=<span class="value">"text/javascript"</span>&gt;</span><span class="javascript"></span><br><span class="line">        <span class="keyword">var</span> timetask = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">var</span> loginoutTime = <span class="number">30</span>;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">timecount</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">            timetask++;</span><br><span class="line">            <span class="built_in">console</span>.log(timetask);</span><br><span class="line">            <span class="keyword">if</span>(timetask &gt;= loginoutTime) &#123;</span><br><span class="line">                loginout();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">start</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">            timetask = <span class="number">0</span>;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">'start!'</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">loginout</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">            alert(<span class="string">'long time!'</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        setInterval(<span class="string">'timecount()'</span>,<span class="number">1000</span>);</span><br><span class="line">    </span><span class="tag">&lt;/<span class="title">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<li><p>服务器存放信息（Cookie）<br>  我们上面已经说过，HTTP是无状态的，但是在实际中很多网站需要识别用户。客户端在访问服务器时，服务器会产生一个识别码，然后响应报文会添加Set-cookie的首部，然后之后每个请求报文都会有Cookie发送过去服务器。</p>
+</li>
+</ul>
 </span>
       
     </div>
@@ -313,9 +286,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/js/" rel="tag">#js</a>
-          
-            <a href="/tags/web/" rel="tag">#web</a>
+            <a href="/tags/HTTP/" rel="tag">#HTTP</a>
           
         </div>
       
@@ -324,17 +295,13 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/01/11/帮助你了解click和onclick/" rel="next" title="帮助你了解click和onclick">
-                <i class="fa fa-chevron-left"></i> 帮助你了解click和onclick
+              <a href="/2016/04/27/JavaScripts四种调用模式/" rel="next" title="JavaScripts的四种调用模式">
+                <i class="fa fa-chevron-left"></i> JavaScripts的四种调用模式
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/04/27/JavaScripts四种调用模式/" rel="prev" title="JavaScripts的四种调用模式">
-                JavaScripts的四种调用模式 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -361,8 +328,8 @@
         
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2016/03/25/实现记住密码与登录超时功能/"
-           data-title="实现记住密码与登录超时功能" data-url="http://yoursite.com/2016/03/25/实现记住密码与登录超时功能/">
+      <div class="ds-thread" data-thread-key="2016/05/20/关于http协议/"
+           data-title="关于HTTP" data-url="http://yoursite.com/2016/05/20/关于http协议/">
       </div>
     
   </div>
