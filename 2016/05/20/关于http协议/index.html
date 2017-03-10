@@ -57,7 +57,7 @@
 <meta property="og:url" content="http://yoursite.com/2016/05/20/关于http协议/index.html">
 <meta property="og:site_name" content="ccDeng">
 <meta property="og:description" content="与HTTP相关。">
-<meta property="og:updated_time" content="2017-03-02T08:40:10.198Z">
+<meta property="og:updated_time" content="2017-03-10T14:05:17.685Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="关于HTTP">
 <meta name="twitter:description" content="与HTTP相关。">
@@ -270,7 +270,7 @@
 </li>
 <li><p>HTTP的请求（request）与响应（response）<br>  HTTP的request报文由三部分组成，包括请求行、首部行、实体主体。其中请求行包括方法、URL、HTTP版本。<br>  response报文由三部分组成，包括状态行、首部行、实体主体。其中状态行包括HTTP版本、状态码、简单短语。</p>
 </li>
-<li><p>HTTP请求方法<br>  OPTION： 请求一些选项的信息<br>  GET：请求读取URL标志的信息<br>  HEAD： 请求读取URL标志的信息首部<br>  POST： 给服务器添加信息（GET跟POST请求的区别在于GET传参数附在URL后，POST传Params）<br>  PUT： 在URL下存储文档<br>  DELETE： 删除URL下资源<br>  TRACE：进行环回测试<br>  CONNECT： 代理服务器<br>  另，POST请求要发送两次，先发送头再发送数据，如只需要获取尽量使用GET</p>
+<li><p>HTTP请求方法<br>  OPTION： 请求一些选项的信息<br>  GET：请求读取URL标志的信息<br>  HEAD： 请求读取URL标志的信息首部<br>  POST： 给服务器添加信息（GET跟POST请求的区别在于GET传参数附在URL后，POST传Params单独存在；GET请求有长度限制，POST没有；POST安全性要高于GET，不缓存在浏览器中，也不显示在url中）<br>  PUT： 在URL下存储文档<br>  DELETE： 删除URL下资源<br>  TRACE：进行环回测试<br>  CONNECT： 代理服务器</p>
 </li>
 <li><p>HTTP状态码<br>  1xx： 表示通知信息，如请求收到了或正在处理<br>  2xx： 表示成功，如接受或者知道<br>  3xx： 表示重定向，如完成请求还需进一步<br>  4xx： 表示客户端的错误，不能完成<br>  5xx： 服务器错误，不能完成<br>  举例较为常见的状态码：</p>
   <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">200</span> OK <span class="comment">//客户端请求成功</span></span><br><span class="line"><span class="number">304</span> Not Modified <span class="comment">//未修改</span></span><br><span class="line"><span class="number">400</span> Bad Request <span class="comment">//客户端请求有语法错误</span></span><br><span class="line"><span class="number">401</span> Unauthorized <span class="comment">//未经授权 </span></span><br><span class="line"><span class="number">403</span> Forbidden <span class="comment">//服务器拒绝服务</span></span><br><span class="line"><span class="number">404</span> Not Found <span class="comment">//请求资源不存在</span></span><br><span class="line"><span class="number">500</span> Internal Server Error <span class="comment">//服务器发生不可预期的错误</span></span><br><span class="line"><span class="number">503</span> Server Unavailable <span class="comment">//服务器当前不能处理请求</span></span><br></pre></td></tr></table></figure>
